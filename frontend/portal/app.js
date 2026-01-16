@@ -258,16 +258,16 @@
   function renderLanding(app) {
     app.innerHTML = `
       ${renderNav({
-        rightHtml: isAuthed()
-          ? `
+      rightHtml: isAuthed()
+        ? `
             <a class="nav-link" href="#/" data-scroll="how-it-works">How it works</a>
             <a class="btn" href="#/app">Open Portal</a>
           `
-          : `
+        : `
             <a class="nav-link" href="#/" data-scroll="how-it-works">How it works</a>
             <a class="btn" href="#/login">Sign in</a>
           `
-      })}
+    })}
       <div class="container hero">
         <div class="hero-grid">
           <div class="hero-copy">
@@ -377,7 +377,7 @@
         </div>
       </div>
 
-      <div class="container section" id="artifacts">
+      <div class="container section" id="artifacts" data-animate>
         <div class="section-title">What you hand an auditor</div>
         <div class="artifact-grid">
           <div class="artifact-card">
@@ -402,7 +402,7 @@
         <div class="section-note">Everything is timestamped and re-generatable.</div>
       </div>
 
-      <div class="container section">
+      <div class="container section" data-animate>
         <div class="section-title">Evidence keys preview</div>
         <div class="proof-block">
           <div class="proof-heading">Compliance mappings are traceable in <span class="mono">compliance_evidence.json</span> and <span class="mono">compliance_mapping.xlsx</span>.</div>
@@ -410,7 +410,7 @@
         </div>
       </div>
 
-      <div class="container section" id="how-it-works">
+      <div class="container section" id="how-it-works" data-animate>
         <div class="section-title">How it works</div>
         <div class="steps">
           <div class="step">
@@ -454,8 +454,8 @@
   function renderLogin(app) {
     app.innerHTML = `
       ${renderNav({
-        rightHtml: `<a class="btn ghost" href="#/">Back</a>`
-      })}
+      rightHtml: `<a class="btn ghost" href="#/">Back</a>`
+    })}
       <div class="container hero">
         <div class="card pad" style="max-width:520px; margin: 0 auto;">
           <div style="font-weight:780; font-size:20px;">Sign in</div>
@@ -522,14 +522,14 @@
   function renderAppShell(app, renderInner) {
     app.innerHTML = `
       ${renderNav({
-        rightHtml: `
+      rightHtml: `
           <span class="pill">
             <span class="mono" id="me-pill">Loading…</span>
           </span>
           <a class="btn" href="#/app/settings">Settings</a>
           <button class="btn danger" id="logout-btn">Logout</button>
         `
-      })}
+    })}
       <div class="container section">
         <div class="card split">
           <div class="sidebar">
@@ -907,8 +907,8 @@
   function renderNotFound(app) {
     app.innerHTML = `
       ${renderNav({
-        rightHtml: `<a class="btn" href="#/">Home</a>`
-      })}
+      rightHtml: `<a class="btn" href="#/">Home</a>`
+    })}
       <div class="container hero">
         <div class="card pad">
           <div style="font-weight:820; font-size:20px;">Not found</div>
