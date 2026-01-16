@@ -239,7 +239,7 @@
         <div class="container nav-inner">
           <a class="brand" href="#/">
             <div class="brand-badge" aria-hidden="true">
-              <span class="brand-letter">P</span>
+              <img class="brand-logo" src="./assets/polaris-logo.svg" alt="Polaris logo" />
             </div>
             <div class="brand-title">
               <strong>Polaris Security Portal</strong>
