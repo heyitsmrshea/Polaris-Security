@@ -234,9 +234,6 @@
 
   // ---- UI ----
   function renderNav({ rightHtml = "" } = {}) {
-    const theme = document.documentElement.dataset.theme || "dark";
-    const themeLabel = theme === "light" ? "Light" : "Dark";
-
     return `
       <div class="nav">
         <div class="container nav-inner">
@@ -246,14 +243,11 @@
             </div>
             <div class="brand-title">
               <strong>Polaris Security Portal</strong>
-              <span>Executive security reporting, runs, and evidence</span>
+              <span>Verified reporting and evidence</span>
             </div>
           </a>
 
           <div class="nav-actions">
-            <button class="btn" id="theme-toggle" title="Toggle theme">
-              Theme: ${themeLabel}
-            </button>
             ${rightHtml}
           </div>
         </div>
@@ -265,116 +259,109 @@
     app.innerHTML = `
       ${renderNav({
         rightHtml: isAuthed()
-          ? `<a class="btn primary" href="#/app">Open Portal</a>`
-          : `<a class="btn primary" href="#/login">Sign in</a>`
+          ? `<a class="btn" href="#/app">Open Portal</a>`
+          : `<a class="btn" href="#/login">Sign in</a>`
       })}
       <div class="container hero">
         <div class="hero-grid">
-          <div class="card pad">
-            <h1 class="h-title">Security reporting your customers actually trust.</h1>
+          <div class="hero-copy">
+            <h1 class="h-title">Security reports customers can verify.</h1>
             <p class="h-sub">
-              Deliver clear, consistent, auditable security reports with run history, artifacts, and evidence,
-              without dumping raw telemetry in someone’s lap.
+              Every report includes evidence, timestamps, and a complete run trail. No screenshots. No fluff.
             </p>
-            <div class="row">
-              <a class="btn primary" href="#/login">Sign in</a>
-              <a class="btn ghost" href="#/app">View demo dashboard</a>
-              <span class="badge">No backend required for this UI</span>
+            <ul class="hero-list">
+              <li>DOCX report, text extract, support bundle</li>
+              <li>PASS, WARN, FAIL history with timestamps</li>
+              <li>Evidence paths for audits and questionnaires</li>
+            </ul>
+            <div class="cta-row">
+              <a class="btn primary" href="#/app">View demo</a>
+              <a class="btn" href="#/login">Sign in</a>
             </div>
-
-            <div class="kpis">
-              <div class="kpi">
-                <div class="label">Runs and artifacts</div>
-                <div class="value">Docx + Extract + Bundle</div>
-                <div class="hint">Designed around your current outputs folder model</div>
-              </div>
-              <div class="kpi">
-                <div class="label">Consistency</div>
-                <div class="value">Single source of truth</div>
-                <div class="hint">Validated domain count stays aligned with the domain table</div>
-              </div>
-              <div class="kpi">
-                <div class="label">Customer-ready</div>
-                <div class="value">Clean portal UX</div>
-                <div class="hint">Landing, auth, dashboard, details, settings</div>
-              </div>
-            </div>
+            <div class="hero-caption">Demo uses mock data. Wire to the API later.</div>
           </div>
 
-          <div class="card pad">
-            <div class="row" style="justify-content: space-between;">
-              <div>
-                <div style="font-weight:740; font-size:16px;">What customers see</div>
-                <div class="small">A portal that feels like a product</div>
+          <div class="hero-shot">
+            <div class="shot">
+              <div class="shot-bar">
+                <div class="shot-dots"><span></span><span></span><span></span></div>
+                <div class="shot-title">Run dashboard</div>
+                <div class="shot-meta">tenant_clean</div>
               </div>
-              <span class="badge good">Production layout</span>
-            </div>
-
-            <div class="hr"></div>
-
-            <div class="grid-2">
-              <div class="kpi" style="background: rgba(255,255,255,0.04);">
-                <div class="label">Runs</div>
-                <div class="value">History + statuses</div>
-                <div class="hint">PASS / WARN / FAIL with timestamps</div>
+              <div class="shot-body">
+                <div class="shot-sidebar">
+                  <div class="shot-item active">Runs</div>
+                  <div class="shot-item">Domains</div>
+                  <div class="shot-item">Evidence</div>
+                  <div class="shot-item">Actions</div>
+                </div>
+                <div class="shot-main">
+                  <div class="shot-summary">
+                    <span>Latest run: Mar 14, 2026 09:12</span>
+                    <span>Artifacts: 3</span>
+                  </div>
+                  <table class="shot-table">
+                    <thead>
+                      <tr>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th>Report</th>
+                        <th>Evidence</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Mar 14</td>
+                        <td><span class="chip warn">WARN</span></td>
+                        <td>report.docx</td>
+                        <td>support_bundle.zip</td>
+                      </tr>
+                      <tr>
+                        <td>Mar 12</td>
+                        <td><span class="chip pass">PASS</span></td>
+                        <td>report.docx</td>
+                        <td>support_bundle.zip</td>
+                      </tr>
+                      <tr>
+                        <td>Mar 05</td>
+                        <td><span class="chip fail">FAIL</span></td>
+                        <td>report.docx</td>
+                        <td>support_bundle.zip</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
               </div>
-              <div class="kpi" style="background: rgba(255,255,255,0.04);">
-                <div class="label">Artifacts</div>
-                <div class="value">Download links</div>
-                <div class="hint">Docx, text extract, support bundle</div>
-              </div>
-              <div class="kpi" style="background: rgba(255,255,255,0.04);">
-                <div class="label">Domains</div>
-                <div class="value">Coverage table</div>
-                <div class="hint">Transport + Validation + Confidence</div>
-              </div>
-              <div class="kpi" style="background: rgba(255,255,255,0.04);">
-                <div class="label">Actions</div>
-                <div class="value">P0–P2 plan</div>
-                <div class="hint">Owner, effort, and timeline</div>
-              </div>
-            </div>
-
-            <div class="hr"></div>
-
-            <div class="row">
-              <span class="badge">Later: wire to /api</span>
-              <span class="badge">SSO ready</span>
-              <span class="badge">Audit-friendly</span>
             </div>
           </div>
         </div>
       </div>
 
       <div class="container section">
-        <div class="card pad">
-          <div class="row" style="justify-content: space-between;">
-            <div>
-              <div style="font-weight:740; font-size:18px;">Deploy options</div>
-              <div class="small">Pick one, then we can wire auth + API</div>
-            </div>
-            <span class="badge warn">Next step</span>
+        <div class="section-title">Proof points</div>
+        <div class="proof-grid">
+          <div class="proof-card">
+            <h3>Audit-friendly outputs</h3>
+            <p>Evidence bundle and paths included.</p>
           </div>
-          <div class="hr"></div>
-          <div class="grid-2">
-            <div class="kpi">
-              <div class="label">Fastest</div>
-              <div class="value">Static host</div>
-              <div class="hint">GitHub Pages / Netlify / Cloudflare Pages</div>
-            </div>
-            <div class="kpi">
-              <div class="label">Best product feel</div>
-              <div class="value">Serve behind your app</div>
-              <div class="hint">Same domain as API, easy auth</div>
-            </div>
+          <div class="proof-card">
+            <h3>Repeatable runs</h3>
+            <p>Every run has a timestamped manifest.</p>
+          </div>
+          <div class="proof-card">
+            <h3>Customer-ready UX</h3>
+            <p>Clean portal view for execs and auditors.</p>
           </div>
         </div>
       </div>
 
       <div class="container footer">
         <div class="row" style="justify-content: space-between;">
-          <div>© ${new Date().getFullYear()} Polaris Security Portal</div>
-          <div class="mono">Build: static-ui-demo</div>
+          <div>Copyright ${new Date().getFullYear()} Polaris Security Portal</div>
+          <div class="row">
+            <button class="btn small" id="theme-toggle" title="Toggle theme">Theme</button>
+            <div class="mono">Build: static-ui-demo</div>
+          </div>
         </div>
       </div>
     `;
@@ -499,7 +486,10 @@
       <div class="container footer">
         <div class="row" style="justify-content: space-between;">
           <div class="small">Portal demo UI</div>
-          <div class="mono">v0.1</div>
+          <div class="row">
+            <button class="btn small" id="theme-toggle" title="Toggle theme">Theme</button>
+            <div class="mono">v0.1</div>
+          </div>
         </div>
       </div>
     `;
