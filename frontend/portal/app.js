@@ -111,7 +111,7 @@
       await sleep(180);
       return {
         name: "Drew",
-        org: "tenant_clean",
+        org: "polaris",
         role: "Admin",
         email: "drew@example.com",
       };
@@ -126,7 +126,7 @@
         const id = `run_${d.toISOString().replace(/[-:.TZ]/g, "").slice(0, 14)}_${status.toLowerCase()}`;
         return {
           id,
-          org_slug: i % 3 === 0 ? "polaris" : "tenant_clean",
+          org_slug: "polaris",
           label: i % 2 === 0 ? "ad-hoc" : "scheduled",
           created_at: d.toISOString(),
           status,
@@ -239,7 +239,7 @@
         <div class="container nav-inner">
           <a class="brand" href="#/">
             <div class="brand-badge" aria-hidden="true">
-              <img class="brand-logo" src="./assets/polaris-logo.svg" alt="" />
+              <span class="brand-letter">P</span>
             </div>
             <div class="brand-title">
               <strong>Polaris Security Portal</strong>
@@ -259,25 +259,32 @@
     app.innerHTML = `
       ${renderNav({
         rightHtml: isAuthed()
-          ? `<a class="btn" href="#/app">Open Portal</a>`
-          : `<a class="btn" href="#/login">Sign in</a>`
+          ? `
+            <a class="nav-link" href="#/" data-scroll="how-it-works">How it works</a>
+            <a class="btn" href="#/app">Open Portal</a>
+          `
+          : `
+            <a class="nav-link" href="#/" data-scroll="how-it-works">How it works</a>
+            <a class="btn" href="#/login">Sign in</a>
+          `
       })}
       <div class="container hero">
         <div class="hero-grid">
           <div class="hero-copy">
-            <h1 class="h-title">Security reports customers can verify.</h1>
+            <h1 class="h-title">Evidence-backed security reporting.</h1>
             <p class="h-sub">
-              Every report includes evidence, timestamps, and a complete run trail. No screenshots. No fluff.
+              Every report ships with the artifacts and evidence trails auditors ask for. No screenshots. No manual packaging.
             </p>
             <ul class="hero-list">
-              <li>DOCX report, text extract, support bundle</li>
-              <li>PASS, WARN, FAIL history with timestamps</li>
-              <li>Evidence paths for audits and questionnaires</li>
+              <li><span class="mono">report.docx</span> + <span class="mono">report_text_extract.txt</span> + <span class="mono">support_bundle.zip</span></li>
+              <li>PASS, WARN, FAIL history with timestamps and manifests</li>
+              <li>Evidence keys and paths for questionnaires and audits</li>
             </ul>
             <div class="cta-row">
               <a class="btn primary" href="#/app">View demo</a>
               <a class="btn" href="#/login">Sign in</a>
             </div>
+            <a class="text-link hero-link" href="#/" data-scroll="artifacts">See sample artifacts</a>
             <div class="hero-caption">Demo uses mock data. Wire to the API later.</div>
           </div>
 
@@ -285,8 +292,8 @@
             <div class="shot">
               <div class="shot-bar">
                 <div class="shot-dots"><span></span><span></span><span></span></div>
-                <div class="shot-title">Run dashboard</div>
-                <div class="shot-meta">tenant_clean</div>
+                <div class="shot-title">Run overview</div>
+                <div class="shot-meta">Evidence review</div>
               </div>
               <div class="shot-body">
                 <div class="shot-sidebar">
@@ -298,7 +305,7 @@
                 <div class="shot-main">
                   <div class="shot-summary">
                     <span>Latest run: Mar 14, 2026 09:12</span>
-                    <span>Artifacts: 3</span>
+                    <span>Artifacts: report.docx + report_text_extract.txt + support_bundle.zip</span>
                   </div>
                   <table class="shot-table">
                     <thead>
@@ -333,25 +340,68 @@
                 </div>
               </div>
             </div>
+            <div class="shot-mobile">
+              <div class="metric-card">
+                <div class="metric-label">Latest status</div>
+                <div class="metric-value">WARN</div>
+              </div>
+              <div class="metric-card">
+                <div class="metric-label">Artifacts</div>
+                <div class="metric-value">report.docx, report_text_extract.txt, support_bundle.zip</div>
+              </div>
+              <div class="metric-card">
+                <div class="metric-label">Run trail</div>
+                <div class="metric-value">PASS, WARN, FAIL with timestamps</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="container trust-strip" id="how-it-works">
+        <div class="trust-item">Evidence bundle, manifests, and retention policies</div>
+        <div class="trust-item">Designed for SOC 2 and ISO 27001 questionnaires</div>
+        <div class="trust-item">Single source of truth for report outputs</div>
+      </div>
+
+      <div class="container section" id="artifacts">
+        <div class="section-title">Sample artifacts</div>
+        <div class="artifact-grid">
+          <div class="artifact-card">
+            <div class="artifact-name">report.docx</div>
+            <div class="artifact-desc">Executive report with coverage and evidence references.</div>
+          </div>
+          <div class="artifact-card">
+            <div class="artifact-name">report_text_extract.txt</div>
+            <div class="artifact-desc">Machine-readable extract for review and parsing.</div>
+          </div>
+          <div class="artifact-card">
+            <div class="artifact-name">support_bundle.zip</div>
+            <div class="artifact-desc">Evidence bundle with manifests and paths.</div>
           </div>
         </div>
       </div>
 
       <div class="container section">
-        <div class="section-title">Proof points</div>
+        <div class="section-title">Built for evidence</div>
         <div class="proof-grid">
           <div class="proof-card">
-            <h3>Audit-friendly outputs</h3>
-            <p>Evidence bundle and paths included.</p>
+            <h3>Faster audit prep</h3>
+            <p>Artifacts already packaged and ready to share.</p>
           </div>
           <div class="proof-card">
             <h3>Repeatable runs</h3>
-            <p>Every run has a timestamped manifest.</p>
+            <p>Manifest and timestamps for every run.</p>
           </div>
           <div class="proof-card">
-            <h3>Customer-ready UX</h3>
-            <p>Clean portal view for execs and auditors.</p>
+            <h3>Fewer back-and-forths</h3>
+            <p>Evidence references auditors can follow.</p>
           </div>
+        </div>
+        <div class="trust-row">
+          <span>No raw telemetry sharing</span>
+          <span>Artifact retention controls</span>
+          <span>Exportable evidence bundle</span>
         </div>
       </div>
 
@@ -359,8 +409,8 @@
         <div class="row" style="justify-content: space-between;">
           <div>Copyright ${new Date().getFullYear()} Polaris Security Portal</div>
           <div class="row">
+            <a class="text-link" href="mailto:security@polaris.example">Security</a>
             <button class="btn small" id="theme-toggle" title="Toggle theme">Theme</button>
-            <div class="mono">Build: static-ui-demo</div>
           </div>
         </div>
       </div>
@@ -849,6 +899,25 @@
         route();
       };
     }
+
+    const scrollLinks = qsa("[data-scroll]");
+    scrollLinks.forEach((link) => {
+      link.addEventListener("click", (event) => {
+        const target = link.getAttribute("data-scroll");
+        if (!target) return;
+        event.preventDefault();
+        const doScroll = () => {
+          const el = qs(`#${target}`);
+          if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+        };
+        if (location.hash !== "#/" && location.hash !== "") {
+          location.hash = "#/";
+          setTimeout(doScroll, 50);
+        } else {
+          doScroll();
+        }
+      });
+    });
   }
 
   function wireAuthedHandlers() {
