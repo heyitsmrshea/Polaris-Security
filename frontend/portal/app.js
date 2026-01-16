@@ -239,11 +239,11 @@
         <div class="container nav-inner">
           <a class="brand" href="#/">
             <div class="brand-badge" aria-hidden="true">
-              <img class="brand-logo" src="./assets/polaris-logo.svg" alt="Polaris logo" />
+              <span class="brand-letter">P</span>
             </div>
             <div class="brand-title">
               <strong>Polaris Security Portal</strong>
-              <span>Verified reporting and evidence</span>
+              <span>Evidence-backed reporting</span>
             </div>
           </a>
 
@@ -271,72 +271,91 @@
       <div class="container hero">
         <div class="hero-grid">
           <div class="hero-copy">
-            <h1 class="h-title">Evidence-backed security reporting.</h1>
+            <h1 class="h-title">Reports, runs, and evidence in one place.</h1>
             <p class="h-sub">
               Every report ships with the artifacts and evidence trails auditors ask for. No screenshots. No manual packaging.
             </p>
-            <ul class="hero-list">
-              <li><span class="mono">report.docx</span> + <span class="mono">report_text_extract.txt</span> + <span class="mono">support_bundle.zip</span></li>
-              <li>PASS, WARN, FAIL history with timestamps and manifests</li>
-              <li>Evidence keys and paths for questionnaires and audits</li>
-            </ul>
+            <div class="hero-chips">
+              <div class="chip-card">
+                <div class="chip-title">Artifacts included</div>
+                <div class="chip-sub"><span class="mono">report.docx</span> + <span class="mono">report_text_extract.txt</span> + <span class="mono">support_bundle.zip</span></div>
+              </div>
+              <div class="chip-card">
+                <div class="chip-title">Traceable history</div>
+                <div class="chip-sub">Timestamps and manifests for every run.</div>
+              </div>
+              <div class="chip-card">
+                <div class="chip-title">Audit evidence keys</div>
+                <div class="chip-sub">Paths for SOC 2 and ISO questionnaires.</div>
+              </div>
+            </div>
             <div class="cta-row">
               <a class="btn primary" href="#/app">View demo</a>
               <a class="btn" href="#/login">Sign in</a>
             </div>
             <a class="text-link hero-link" href="#/" data-scroll="artifacts">See sample artifacts</a>
             <div class="hero-caption">Demo uses mock data. Wire to the API later.</div>
+            <div class="trusted-row">
+              <span>Trusted by</span>
+              <span class="trust-pill">M&amp;A Rollups</span>
+              <span class="trust-pill">Energy</span>
+              <span class="trust-pill">Manufacturing</span>
+              <span class="trust-pill">Healthcare</span>
+            </div>
           </div>
 
           <div class="hero-shot">
-            <div class="shot">
-              <div class="shot-bar">
-                <div class="shot-dots"><span></span><span></span><span></span></div>
-                <div class="shot-title">Run overview</div>
-                <div class="shot-meta">Evidence review</div>
-              </div>
-              <div class="shot-body">
-                <div class="shot-sidebar">
-                  <div class="shot-item active">Runs</div>
-                  <div class="shot-item">Domains</div>
-                  <div class="shot-item">Evidence</div>
-                  <div class="shot-item">Actions</div>
+            <div class="device-frame">
+              <div class="device-tag">Run overview</div>
+              <div class="shot">
+                <div class="shot-bar">
+                  <div class="shot-dots"><span></span><span></span><span></span></div>
+                  <div class="shot-title">Evidence-ready report</div>
+                  <div class="shot-meta">Artifacts bundled</div>
                 </div>
-                <div class="shot-main">
-                  <div class="shot-summary">
-                    <span>Latest run: Mar 14, 2026 09:12</span>
-                    <span>Artifacts: report.docx + report_text_extract.txt + support_bundle.zip</span>
+                <div class="shot-body">
+                  <div class="shot-sidebar">
+                    <div class="shot-item active">Runs</div>
+                    <div class="shot-item">Domains</div>
+                    <div class="shot-item">Evidence</div>
+                    <div class="shot-item">Actions</div>
                   </div>
-                  <table class="shot-table">
-                    <thead>
-                      <tr>
-                        <th>Date</th>
-                        <th>Status</th>
-                        <th>Report</th>
-                        <th>Evidence</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>Mar 14</td>
-                        <td><span class="chip warn">WARN</span></td>
-                        <td>report.docx</td>
-                        <td>support_bundle.zip</td>
-                      </tr>
-                      <tr>
-                        <td>Mar 12</td>
-                        <td><span class="chip pass">PASS</span></td>
-                        <td>report.docx</td>
-                        <td>support_bundle.zip</td>
-                      </tr>
-                      <tr>
-                        <td>Mar 05</td>
-                        <td><span class="chip fail">FAIL</span></td>
-                        <td>report.docx</td>
-                        <td>support_bundle.zip</td>
-                      </tr>
-                    </tbody>
-                  </table>
+                  <div class="shot-main">
+                    <div class="shot-summary">
+                      <span>Latest run: Mar 14, 2026 09:12</span>
+                      <span>Artifacts: 3</span>
+                    </div>
+                    <table class="shot-table">
+                      <thead>
+                        <tr>
+                          <th>Date</th>
+                          <th>Status</th>
+                          <th>Report</th>
+                          <th>Evidence</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>Mar 14</td>
+                          <td><span class="chip warn">WARN</span></td>
+                          <td>report.docx</td>
+                          <td>support_bundle.zip</td>
+                        </tr>
+                        <tr>
+                          <td>Mar 12</td>
+                          <td><span class="chip pass">PASS</span></td>
+                          <td>report.docx</td>
+                          <td>support_bundle.zip</td>
+                        </tr>
+                        <tr>
+                          <td>Mar 05</td>
+                          <td><span class="chip fail">FAIL</span></td>
+                          <td>report.docx</td>
+                          <td>support_bundle.zip</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               </div>
             </div>
@@ -358,50 +377,52 @@
         </div>
       </div>
 
-      <div class="container trust-strip" id="how-it-works">
-        <div class="trust-item">Evidence bundle, manifests, and retention policies</div>
-        <div class="trust-item">Designed for SOC 2 and ISO 27001 questionnaires</div>
-        <div class="trust-item">Single source of truth for report outputs</div>
-      </div>
-
       <div class="container section" id="artifacts">
-        <div class="section-title">Sample artifacts</div>
+        <div class="section-title">What you hand an auditor</div>
         <div class="artifact-grid">
           <div class="artifact-card">
+            <div class="artifact-icon">DOCX</div>
             <div class="artifact-name">report.docx</div>
-            <div class="artifact-desc">Executive report with coverage and evidence references.</div>
+            <div class="artifact-desc">Executive narrative with coverage and findings.</div>
           </div>
           <div class="artifact-card">
+            <div class="artifact-icon">TXT</div>
             <div class="artifact-name">report_text_extract.txt</div>
-            <div class="artifact-desc">Machine-readable extract for review and parsing.</div>
+            <div class="artifact-desc">Searchable extraction for review and parsing.</div>
           </div>
           <div class="artifact-card">
+            <div class="artifact-icon">ZIP</div>
             <div class="artifact-name">support_bundle.zip</div>
-            <div class="artifact-desc">Evidence bundle with manifests and paths.</div>
+            <div class="artifact-desc">Evidence bundle with manifest and paths.</div>
           </div>
         </div>
+        <div class="section-note">Everything is timestamped and re-generatable.</div>
       </div>
 
-      <div class="container section">
-        <div class="section-title">Built for evidence</div>
-        <div class="proof-grid">
-          <div class="proof-card">
-            <h3>Faster audit prep</h3>
-            <p>Artifacts already packaged and ready to share.</p>
+      <div class="container section" id="how-it-works">
+        <div class="section-title">How it works</div>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div>
+              <div class="step-title">Collect signals</div>
+              <div class="step-desc">Connect to sources and capture evidence.</div>
+            </div>
           </div>
-          <div class="proof-card">
-            <h3>Repeatable runs</h3>
-            <p>Manifest and timestamps for every run.</p>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div>
+              <div class="step-title">Generate report + bundle</div>
+              <div class="step-desc">Outputs are packaged with timestamps.</div>
+            </div>
           </div>
-          <div class="proof-card">
-            <h3>Fewer back-and-forths</h3>
-            <p>Evidence references auditors can follow.</p>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div>
+              <div class="step-title">Share portal link</div>
+              <div class="step-desc">Stakeholders review one source of truth.</div>
+            </div>
           </div>
-        </div>
-        <div class="trust-row">
-          <span>No raw telemetry sharing</span>
-          <span>Artifact retention controls</span>
-          <span>Exportable evidence bundle</span>
         </div>
       </div>
 
