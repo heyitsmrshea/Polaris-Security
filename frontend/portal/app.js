@@ -271,42 +271,42 @@
       <div class="container hero">
         <div class="hero-grid">
           <div class="hero-copy">
-            <h1 class="h-title">Reports, runs, and evidence in one place.</h1>
+            <h1 class="h-title">Stop rebuilding audit evidence every quarter.</h1>
             <p class="h-sub">
-              Every report ships with the artifacts and evidence trails auditors ask for. No screenshots. No manual packaging.
+              Every run is reproducible, timestamped, and auditor-ready with bundled artifacts and evidence keys.
             </p>
+            <div class="accent-rule" aria-hidden="true"></div>
             <div class="hero-chips">
               <div class="chip-card">
                 <div class="chip-title">Artifacts included</div>
-                <div class="chip-sub"><span class="mono">report.docx</span> + <span class="mono">report_text_extract.txt</span> + <span class="mono">support_bundle.zip</span></div>
+                <div class="chip-sub">Eliminate manual packaging with <span class="mono">report.docx</span>, <span class="mono">report_text_extract.txt</span>, and <span class="mono">support_bundle.zip</span>.</div>
               </div>
               <div class="chip-card">
                 <div class="chip-title">Traceable history</div>
-                <div class="chip-sub">Timestamps and manifests for every run.</div>
+                <div class="chip-sub">Timestamps, manifests, and run metadata for every cycle.</div>
               </div>
               <div class="chip-card">
                 <div class="chip-title">Audit evidence keys</div>
-                <div class="chip-sub">Paths for SOC 2 and ISO questionnaires.</div>
+                <div class="chip-sub">Evidence paths mapped to SOC 2 and ISO questionnaires.</div>
               </div>
             </div>
             <div class="cta-row">
               <a class="btn primary" href="#/app">View demo</a>
-              <a class="btn" href="#/login">Sign in</a>
+              <a class="btn ghost" href="#/" data-scroll="artifacts">See sample artifacts</a>
             </div>
-            <a class="text-link hero-link" href="#/" data-scroll="artifacts">See sample artifacts</a>
             <div class="hero-caption">Demo uses mock data. Wire to the API later.</div>
             <div class="trusted-row">
-              <span>Trusted by</span>
-              <span class="trust-pill">M&amp;A Rollups</span>
-              <span class="trust-pill">Energy</span>
-              <span class="trust-pill">Manufacturing</span>
-              <span class="trust-pill">Healthcare</span>
+              <span>Built for</span>
+              <span class="trust-pill">Auditor workflows</span>
+              <span class="trust-pill">Evidence retention</span>
+              <span class="trust-pill">Multi-tenant reporting</span>
+              <span class="trust-pill">M&amp;A rollups</span>
             </div>
           </div>
 
           <div class="hero-shot">
             <div class="device-frame">
-              <div class="device-tag">Run overview</div>
+              <div class="device-tag">Latest run: WARN with artifacts</div>
               <div class="shot">
                 <div class="shot-bar">
                   <div class="shot-dots"><span></span><span></span><span></span></div>
@@ -323,7 +323,7 @@
                   <div class="shot-main">
                     <div class="shot-summary">
                       <span>Latest run: Mar 14, 2026 09:12</span>
-                      <span>Artifacts: 3</span>
+                      <span>Artifacts: 3 with manifest</span>
                     </div>
                     <table class="shot-table">
                       <thead>
@@ -335,11 +335,11 @@
                         </tr>
                       </thead>
                       <tbody>
-                        <tr>
+                        <tr class="shot-highlight">
                           <td>Mar 14</td>
                           <td><span class="chip warn">WARN</span></td>
                           <td>report.docx</td>
-                          <td>support_bundle.zip</td>
+                          <td><span class="highlight-pill">support_bundle.zip</span></td>
                         </tr>
                         <tr>
                           <td>Mar 12</td>
@@ -384,19 +384,30 @@
             <div class="artifact-icon">DOCX</div>
             <div class="artifact-name">report.docx</div>
             <div class="artifact-desc">Executive narrative with coverage and findings.</div>
+            <div class="artifact-meta">Includes coverage summary and domain notes.</div>
           </div>
           <div class="artifact-card">
             <div class="artifact-icon">TXT</div>
             <div class="artifact-name">report_text_extract.txt</div>
             <div class="artifact-desc">Searchable extraction for review and parsing.</div>
+            <div class="artifact-meta">Plain-text mirror for redlines and QA.</div>
           </div>
           <div class="artifact-card">
             <div class="artifact-icon">ZIP</div>
             <div class="artifact-name">support_bundle.zip</div>
             <div class="artifact-desc">Evidence bundle with manifest and paths.</div>
+            <div class="artifact-meta">manifest.json, evidence paths, run metadata.</div>
           </div>
         </div>
         <div class="section-note">Everything is timestamped and re-generatable.</div>
+      </div>
+
+      <div class="container section">
+        <div class="section-title">Evidence keys preview</div>
+        <div class="proof-block">
+          <div class="proof-heading">Compliance mappings are traceable in <span class="mono">compliance_evidence.json</span> and <span class="mono">compliance_mapping.xlsx</span>.</div>
+          <pre class="code-block">frameworks.soc2.controls.CC6.1.evidence\nframeworks.iso27001_2022.controls.A.5.1.evidence\nframeworks.soc2.controls.CC7.2.evidence\nruns.latest.manifest.artifacts.support_bundle</pre>
+        </div>
       </div>
 
       <div class="container section" id="how-it-works">
@@ -406,14 +417,14 @@
             <div class="step-num">1</div>
             <div>
               <div class="step-title">Collect signals</div>
-              <div class="step-desc">Connect to sources and capture evidence.</div>
+              <div class="step-desc">Connect sources and capture evidence paths.</div>
             </div>
           </div>
           <div class="step">
             <div class="step-num">2</div>
             <div>
               <div class="step-title">Generate report + bundle</div>
-              <div class="step-desc">Outputs are packaged with timestamps.</div>
+              <div class="step-desc">Artifacts are packaged with timestamps and manifests.</div>
             </div>
           </div>
           <div class="step">
@@ -430,7 +441,7 @@
         <div class="row" style="justify-content: space-between;">
           <div>Copyright ${new Date().getFullYear()} Polaris Security Portal</div>
           <div class="row">
-            <a class="text-link" href="mailto:security@polaris.example">Security</a>
+            <a class="footer-link" href="mailto:security@polaris.example">Security</a>
             <button class="btn small" id="theme-toggle" title="Toggle theme">Theme</button>
           </div>
         </div>
