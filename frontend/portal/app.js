@@ -241,7 +241,9 @@
       <div class="nav">
         <div class="container nav-inner">
           <a class="brand" href="#/">
-            <div class="brand-badge" aria-hidden="true"></div>
+            <div class="brand-badge" aria-hidden="true">
+              <img class="brand-logo" src="./assets/polaris-logo.svg" alt="" />
+            </div>
             <div class="brand-title">
               <strong>Polaris Security Portal</strong>
               <span>Executive security reporting, runs, and evidence</span>
