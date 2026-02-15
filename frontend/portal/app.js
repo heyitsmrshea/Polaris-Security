@@ -195,8 +195,8 @@
     const [base, maybeId, tab] = path.split("/").filter(Boolean);
 
     // Auth gating:
-    const publicRoutes = new Set(["", "/"]);
-    const isPublic = path === "/" || path === "";
+    const publicRoutes = new Set(["", "/", "terms", "privacy"]);
+    const isPublic = path === "/" || path === "" || publicRoutes.has(base);
     if (!isPublic && !isAuthed()) {
       renderLogin(app);
       return;
@@ -205,6 +205,16 @@
     // Layout:
     if (path === "/" || path === "") {
       renderLanding(app);
+      return;
+    }
+
+    if (base === "terms") {
+      renderTerms(app);
+      return;
+    }
+
+    if (base === "privacy") {
+      renderPrivacy(app);
       return;
     }
 
@@ -439,9 +449,11 @@
 
       <div class="container footer">
         <div class="row" style="justify-content: space-between;">
-          <div>Copyright ${new Date().getFullYear()} Polaris Security Portal</div>
+          <div>Copyright ${new Date().getFullYear()} Polaris Consulting, LLC</div>
           <div class="row">
-            <a class="footer-link" href="mailto:security@polaris.example">Security</a>
+            <a class="footer-link" href="#/terms">Terms</a>
+            <a class="footer-link" href="#/privacy">Privacy</a>
+            <a class="footer-link" href="mailto:info@polarisconsulting.net">Contact</a>
             <button class="btn small" id="theme-toggle" title="Toggle theme">Theme</button>
           </div>
         </div>
@@ -902,6 +914,223 @@
         </div>
       </div>
     `;
+  }
+
+  function renderTerms(app) {
+    const termsHtml = [
+      renderNav({ rightHtml: '<a class="btn ghost" href="#/">Home</a>' }),
+      '<div class="container section" style="max-width:820px; margin: 0 auto;">',
+      '<a href="#/" class="small" style="color: var(--accent-400);">&larr; Back to Home</a>',
+      '<h1 style="font-weight:820; font-size:28px; margin-top:16px;">Terms of Service</h1>',
+      '<div class="small" style="margin-bottom:32px;">Last updated: February 14, 2026</div>',
+
+      '<div class="card pad" style="margin-bottom:20px;">',
+      '<div style="font-weight:780; font-size:18px; margin-bottom:12px;">1. Agreement to Terms</div>',
+      '<p class="small">These Terms of Service (\u201cTerms\u201d) constitute a legally binding agreement between you (\u201cCustomer,\u201d \u201cClient,\u201d \u201cyou,\u201d or \u201cyour\u201d) and Polaris Consulting, LLC (\u201cPolaris,\u201d \u201cProvider,\u201d \u201cwe,\u201d \u201cus,\u201d or \u201cour\u201d), a company based in Los Angeles, California.</p>',
+      '<p class="small" style="margin-top:8px;">By accessing or using our website at polarisconsulting.net and our security assessment platform (collectively, the \u201cServices\u201d), you agree to be bound by these Terms. If you do not agree to these Terms, you must not access or use our Services.</p>',
+      '<p class="small" style="margin-top:8px;">If you are using our Services on behalf of an organization, you represent and warrant that you have the authority to bind that organization to these Terms.</p>',
+      '<p class="small" style="margin-top:8px;">Customers who have executed a separate Master Services Agreement (\u201cMSA\u201d) with Polaris are governed by the terms of that MSA. In the event of any conflict between these Terms and an executed MSA, the MSA shall control.</p>',
+      '</div>',
+
+      '<div class="card pad" style="margin-bottom:20px;">',
+      '<div style="font-weight:780; font-size:18px; margin-bottom:12px;">2. Description of Services</div>',
+      '<p class="small">Polaris operates a cybersecurity assessment and compliance evaluation platform and offers professional security consulting services. Our Services may include, but are not limited to:</p>',
+      '<ul class="small" style="margin-top:8px; padding-left:20px;"><li>Security posture assessments of Microsoft 365 and Azure environments</li><li>Compliance evaluations against industry frameworks including CMMC 2.0, CIS Controls v8, ISO 27001, NIST CSF, and SOC 2</li><li>Generation of security and compliance reports, including IT operations briefs, executive summaries, and gap analyses</li><li>CMMC Level 2 gap analysis with SPRS scoring</li><li>Managed IT services, ongoing security monitoring, and periodic reassessments (where contracted)</li><li>Access to the platform for dashboard visibility, report retrieval, and compliance tracking</li></ul>',
+      '<p class="small" style="margin-top:8px;">The specific scope, schedule, and deliverables for each engagement may be set forth in a Statement of Work or service agreement between the parties.</p>',
+      '</div>',
+
+      '<div class="card pad" style="margin-bottom:20px;">',
+      '<div style="font-weight:780; font-size:18px; margin-bottom:12px;">3. Read-Only Access and Client Environment</div>',
+      '<p class="small">Our platform connects to your Microsoft 365 tenant using <strong>read-only OAuth permissions</strong> through the Microsoft Graph API. Unless a separate agreement specifically authorizes remediation work or configuration changes, our access to your environment is limited to read-only operations.</p>',
+      '<ul class="small" style="margin-top:8px; padding-left:20px;"><li>We <strong>shall not modify, delete, or alter</strong> any of your configurations, policies, or data without prior written authorization</li><li>We request only the minimum permissions necessary to perform the contracted Services</li><li>You may revoke our access at any time through your Azure AD portal by removing the enterprise application</li><li>Revocation of permissions required for the Services may impact our ability to deliver assessments but shall not constitute a breach by Polaris</li></ul>',
+      '</div>',
+
+      '<div class="card pad" style="margin-bottom:20px;">',
+      '<div style="font-weight:780; font-size:18px; margin-bottom:12px;">4. Client Obligations</div>',
+      '<p class="small">As a Customer, you are responsible for:</p>',
+      '<ul class="small" style="margin-top:8px; padding-left:20px;"><li>Maintaining the security of your Azure AD credentials and account access</li><li>Granting appropriate OAuth permissions necessary for security assessments</li><li>Ensuring you have the authority to connect your organization\u2019s Microsoft 365 tenant and that such access does not violate any agreement, law, or regulation to which you are subject</li><li>Providing timely access, information, and cooperation reasonably necessary for us to perform the Services</li><li>Promptly notifying us of any material changes to your environment that may affect the Services</li><li>Keeping your account information accurate and up to date</li></ul>',
+      '<p class="small" style="margin-top:8px;"><strong>Implementation responsibility:</strong> Unless a separate agreement specifically includes remediation work, you are solely responsible for implementing any recommendations, remediations, or configuration changes identified in our deliverables. Our role is advisory; the decision to implement, partially implement, or decline any recommendation rests entirely with you.</p>',
+      '</div>',
+
+      '<div class="card pad" style="margin-bottom:20px;">',
+      '<div style="font-weight:780; font-size:18px; margin-bottom:12px;">5. Intellectual Property</div>',
+      '<p class="small"><strong>5.1 Platform Ownership:</strong> Polaris retains all right, title, and interest in and to the platform, its proprietary methodologies, assessment frameworks, software, tools, templates, and any pre-existing intellectual property.</p>',
+      '<p class="small" style="margin-top:8px;"><strong>5.2 Deliverable License:</strong> Upon payment in full, we grant you a non-exclusive, non-transferable, perpetual license to use the deliverables for your internal business purposes. You may share deliverables with your auditors, regulators, and legal counsel as reasonably necessary.</p>',
+      '<p class="small" style="margin-top:8px;"><strong>5.3 Customer Data Ownership:</strong> You retain all right, title, and interest in and to your data.</p>',
+      '<p class="small" style="margin-top:8px;"><strong>5.4 Aggregated Data:</strong> We may use aggregated, anonymized, and de-identified data to improve our platform and develop benchmarks, provided it cannot reasonably identify you.</p>',
+      '</div>',
+
+      '<div class="card pad" style="margin-bottom:20px;">',
+      '<div style="font-weight:780; font-size:18px; margin-bottom:12px;">6. Important Disclaimers</div>',
+      '<p class="small" style="font-weight:700;">BY USING OUR SERVICES, YOU ACKNOWLEDGE AND AGREE TO THE FOLLOWING:</p>',
+      '<p class="small" style="margin-top:12px;"><strong>6.1 No Guarantee of Security:</strong> The Services are designed to assess, evaluate, and improve your security posture, but Polaris does not and cannot guarantee that your systems will be free from vulnerabilities, security breaches, or cyberattacks. No security assessment can eliminate all risk.</p>',
+      '<p class="small" style="margin-top:8px;"><strong>6.2 No Guarantee of Compliance:</strong> Our compliance evaluations \u2014 including those referencing CMMC 2.0, CIS Controls v8, ISO 27001, NIST CSF, SOC 2, or any other framework \u2014 are <strong>advisory in nature</strong>. They do not constitute a certification, attestation, or guarantee of compliance. SPRS scores and CMMC readiness assessments are estimates and may differ from official government assessments.</p>',
+      '<p class="small" style="margin-top:8px;"><strong>6.3 Point-in-Time Assessment:</strong> All assessments reflect the state of your environment at the time of the assessment. Polaris is not responsible for changes that occur after an assessment is completed.</p>',
+      '<p class="small" style="margin-top:8px;"><strong>6.4 Advisory Role Only:</strong> Our recommendations are professional advice. You are solely responsible for evaluating and implementing any recommendations.</p>',
+      '<p class="small" style="margin-top:8px;"><strong>6.5 No Warranty of Completeness:</strong> No assessment methodology can identify every vulnerability, misconfiguration, or compliance gap.</p>',
+      '<p class="small" style="margin-top:8px; font-weight:700;"><strong>6.6 Disclaimer of Other Warranties:</strong> EXCEPT AS EXPRESSLY SET FORTH IN THESE TERMS, POLARIS DISCLAIMS ALL OTHER WARRANTIES, WHETHER EXPRESS, IMPLIED, STATUTORY, OR OTHERWISE, INCLUDING ANY WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE, OR NON-INFRINGEMENT. THE SERVICES AND PLATFORM ARE PROVIDED \u201cAS IS.\u201d</p>',
+      '</div>',
+
+      '<div class="card pad" style="margin-bottom:20px;">',
+      '<div style="font-weight:780; font-size:18px; margin-bottom:12px;">7. Limitation of Liability</div>',
+      '<p class="small" style="font-weight:700;"><strong>7.1 Consequential Damages Exclusion:</strong> TO THE MAXIMUM EXTENT PERMITTED BY LAW, NEITHER PARTY SHALL BE LIABLE TO THE OTHER FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, INCLUDING BUT NOT LIMITED TO LOSS OF REVENUE, LOSS OF PROFITS, LOSS OF DATA, BUSINESS INTERRUPTION, COST OF SUBSTITUTE SERVICES, OR REGULATORY FINES.</p>',
+      '<p class="small" style="margin-top:8px; font-weight:700;"><strong>7.2 Liability Cap:</strong> POLARIS\u2019S TOTAL AGGREGATE LIABILITY SHALL NOT EXCEED THE TOTAL FEES PAID BY YOU TO POLARIS DURING THE TWELVE (12) MONTHS IMMEDIATELY PRECEDING THE EVENT GIVING RISE TO THE CLAIM.</p>',
+      '<p class="small" style="margin-top:8px;"><strong>7.3 Exceptions:</strong> The limitations in 7.1 and 7.2 shall not apply to: (a) breaches of confidentiality or data protection obligations; (b) indemnification obligations under Section 8; (c) fraud, gross negligence, or willful misconduct; or (d) your obligation to pay fees owed.</p>',
+      '</div>',
+
+      '<div class="card pad" style="margin-bottom:20px;">',
+      '<div style="font-weight:780; font-size:18px; margin-bottom:12px;">8. Indemnification</div>',
+      '<p class="small"><strong>8.1 Client Indemnification:</strong> You agree to indemnify, defend, and hold harmless Polaris from claims arising out of: (a) your use or misuse of deliverables; (b) your failure to implement recommendations; (c) your misrepresentation of compliance status using our deliverables; (d) claims from your environment not caused by Polaris\u2019s breach; or (e) your violation of any law or regulation.</p>',
+      '<p class="small" style="margin-top:8px;"><strong>8.2 Provider Indemnification:</strong> Polaris shall indemnify you from claims arising out of: (a) Polaris\u2019s gross negligence or willful misconduct; (b) Polaris\u2019s breach of confidentiality or data protection obligations; or (c) claims that the platform infringes a third party\u2019s intellectual property rights.</p>',
+      '</div>',
+
+      '<div class="card pad" style="margin-bottom:20px;">',
+      '<div style="font-weight:780; font-size:18px; margin-bottom:12px;">9. Data Handling and Confidentiality</div>',
+      '<p class="small">Our collection, use, and protection of your data is governed by our <a href="#/privacy" style="color: var(--accent-400);">Privacy Policy</a>, which is incorporated into these Terms by reference.</p>',
+      '<p class="small" style="margin-top:8px;">Your security assessment results, vulnerability findings, compliance status, and related deliverables constitute your confidential information. We shall not disclose such information to any third party without your written consent, except in aggregated, anonymized form.</p>',
+      '<p class="small" style="margin-top:8px;">Data is encrypted in transit (TLS 1.2 or higher) and at rest. We collect and retain only the data reasonably necessary to perform the Services.</p>',
+      '</div>',
+
+      '<div class="card pad" style="margin-bottom:20px;">',
+      '<div style="font-weight:780; font-size:18px; margin-bottom:12px;">10. Service Availability</div>',
+      '<p class="small">We strive to maintain high availability but do not guarantee uninterrupted service. The Services may be temporarily unavailable due to scheduled maintenance, unplanned outages, third-party service disruptions (Microsoft Azure, Microsoft Graph API), or force majeure events.</p>',
+      '</div>',
+
+      '<div class="card pad" style="margin-bottom:20px;">',
+      '<div style="font-weight:780; font-size:18px; margin-bottom:12px;">11. Term and Termination</div>',
+      '<p class="small">Either party may terminate with 30 days\u2019 written notice to <a href="mailto:info@polarisconsulting.net" style="color: var(--accent-400);">info@polarisconsulting.net</a>. Upon termination: you shall pay all fees due; we will deliver completed deliverables; your platform access will be deactivated; client data will be securely deleted within 90 days.</p>',
+      '<p class="small" style="margin-top:8px;">Sections 5, 6, 7, 8, 9, and 13 shall survive termination.</p>',
+      '</div>',
+
+      '<div class="card pad" style="margin-bottom:20px;">',
+      '<div style="font-weight:780; font-size:18px; margin-bottom:12px;">12. Governing Law and Dispute Resolution</div>',
+      '<p class="small">These Terms shall be governed by the laws of the State of California. Disputes shall be subject to the exclusive jurisdiction of the state and federal courts in Los Angeles County, California.</p>',
+      '</div>',
+
+      '<div class="card pad" style="margin-bottom:20px;">',
+      '<div style="font-weight:780; font-size:18px; margin-bottom:12px;">13. General Provisions</div>',
+      '<p class="small"><strong>Modifications:</strong> We may modify these Terms at any time with notice. Continued use constitutes acceptance.</p>',
+      '<p class="small" style="margin-top:8px;"><strong>Severability:</strong> Invalid provisions shall not affect the remaining Terms.</p>',
+      '<p class="small" style="margin-top:8px;"><strong>Entire Agreement:</strong> These Terms, our Privacy Policy, and any executed MSA constitute the entire agreement.</p>',
+      '<p class="small" style="margin-top:8px;"><strong>Independent Contractor:</strong> Polaris is an independent contractor. No employment, partnership, or agency relationship is created.</p>',
+      '<p class="small" style="margin-top:8px;"><strong>Assignment:</strong> You may not assign these Terms without our written consent.</p>',
+      '</div>',
+
+      '<div class="card pad">',
+      '<div style="font-weight:780; font-size:18px; margin-bottom:12px;">14. Contact Us</div>',
+      '<p class="small">If you have any questions about these Terms, please contact us:</p>',
+      '<div style="margin-top:12px; padding:16px; border:1px solid var(--border); border-radius:8px;">',
+      '<div style="font-weight:700;">Polaris Consulting, LLC</div>',
+      '<div class="small" style="margin-top:4px;">Los Angeles, California</div>',
+      '<div class="small" style="margin-top:4px;">Email: <a href="mailto:info@polarisconsulting.net" style="color: var(--accent-400);">info@polarisconsulting.net</a></div>',
+      '</div></div>',
+
+      '</div>',
+      '<div class="container footer"><div class="row" style="justify-content: space-between;"><div>Copyright ', String(new Date().getFullYear()), ' Polaris Consulting, LLC</div><div class="row"><a class="footer-link" href="#/terms">Terms</a><a class="footer-link" href="#/privacy">Privacy</a><button class="btn small" id="theme-toggle" title="Toggle theme">Theme</button></div></div></div>',
+    ].join("\n");
+    app.innerHTML = termsHtml;
+    wireCommonHandlers();
+  }
+
+  function renderPrivacy(app) {
+    const privacyHtml = [
+      renderNav({ rightHtml: '<a class="btn ghost" href="#/">Home</a>' }),
+      '<div class="container section" style="max-width:820px; margin: 0 auto;">',
+      '<a href="#/" class="small" style="color: var(--accent-400);">&larr; Back to Home</a>',
+      '<h1 style="font-weight:820; font-size:28px; margin-top:16px;">Privacy Policy</h1>',
+      '<div class="small" style="margin-bottom:32px;">Last updated: February 14, 2026</div>',
+
+      '<div class="card pad" style="margin-bottom:20px;">',
+      '<div style="font-weight:780; font-size:18px; margin-bottom:12px;">1. Introduction</div>',
+      '<p class="small">Polaris Consulting, LLC (\u201cPolaris,\u201d \u201cwe,\u201d \u201cus,\u201d or \u201cour\u201d) is a cybersecurity assessment and managed IT services company based in Los Angeles, California. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website at polarisconsulting.net and use our security assessment platform (collectively, the \u201cServices\u201d).</p>',
+      '<p class="small" style="margin-top:8px;">By accessing or using our Services, you acknowledge that you have read, understood, and agree to be bound by this Privacy Policy.</p>',
+      '<p class="small" style="margin-top:8px;">Customers who have executed a Master Services Agreement (\u201cMSA\u201d) with Polaris are also subject to the data protection and confidentiality provisions of that agreement. In the event of a conflict, the MSA shall control.</p>',
+      '</div>',
+
+      '<div class="card pad" style="margin-bottom:20px;">',
+      '<div style="font-weight:780; font-size:18px; margin-bottom:12px;">2. Information We Collect</div>',
+      '<p class="small"><strong>2.1 Information You Provide Directly:</strong> Name, email address, phone number, company name, company size, and message content submitted via contact forms.</p>',
+      '<p class="small" style="margin-top:8px;"><strong>2.2 Client Environment Data (OAuth Consent):</strong> When you connect your Microsoft 365 tenant, we collect read-only data including tenant configuration, Azure AD settings, security policies, device compliance status, email security settings, and Microsoft Secure Score data. We access this using <strong>read-only OAuth permissions</strong> through the Microsoft Graph API.</p>',
+      '<p class="small" style="margin-top:8px;"><strong>2.3 Information Collected Automatically:</strong> Browser type, pages visited, referring website, device type, general geographic location, and session recordings/heatmap data via Microsoft Clarity.</p>',
+      '</div>',
+
+      '<div class="card pad" style="margin-bottom:20px;">',
+      '<div style="font-weight:780; font-size:18px; margin-bottom:12px;">3. Analytics and Tracking</div>',
+      '<p class="small">We use <strong>Microsoft Clarity</strong> for session recordings, heatmaps, and performance metrics. Clarity does not collect personally identifiable information from recordings. Sensitive input fields are automatically masked. See <a href="https://clarity.microsoft.com/terms" target="_blank" rel="noopener noreferrer" style="color: var(--accent-400);">Microsoft Clarity\u2019s Terms</a>.</p>',
+      '</div>',
+
+      '<div class="card pad" style="margin-bottom:20px;">',
+      '<div style="font-weight:780; font-size:18px; margin-bottom:12px;">4. Cookies</div>',
+      '<div style="overflow-x:auto;"><table class="table"><thead><tr><th>Cookie</th><th>Purpose</th><th>Duration</th></tr></thead><tbody>',
+      '<tr><td><strong>Session cookie</strong></td><td class="small">Authentication and session management</td><td class="small">Session / 24 hours</td></tr>',
+      '<tr><td><strong>_clck, _clsk</strong></td><td class="small">Microsoft Clarity user identification and session tracking</td><td class="small">12 months</td></tr>',
+      '<tr><td><strong>CLID</strong></td><td class="small">Microsoft Clarity session identification</td><td class="small">12 months</td></tr>',
+      '<tr><td><strong>cookie_consent</strong></td><td class="small">Stores your cookie consent preference</td><td class="small">12 months</td></tr>',
+      '</tbody></table></div></div>',
+
+      '<div class="card pad" style="margin-bottom:20px;">',
+      '<div style="font-weight:780; font-size:18px; margin-bottom:12px;">5. How We Use Your Information</div>',
+      '<p class="small">We use information to: perform security assessments, generate reports, respond to inquiries, provide support, improve our platform through analytics, maintain security, and comply with legal obligations.</p>',
+      '<p class="small" style="margin-top:8px;"><strong>Data minimization:</strong> We collect and retain only the data reasonably necessary to perform the Services. We shall not use your Client Data for any purpose other than performing the Services unless expressly authorized.</p>',
+      '</div>',
+
+      '<div class="card pad" style="margin-bottom:20px;">',
+      '<div style="font-weight:780; font-size:18px; margin-bottom:12px;">6. Third-Party Services (Subprocessors)</div>',
+      '<p class="small">All subprocessors are bound by data protection obligations consistent with this Privacy Policy:</p>',
+      '<ul class="small" style="margin-top:8px; padding-left:20px;"><li><strong>Microsoft Azure:</strong> Cloud hosting infrastructure</li><li><strong>Microsoft Graph API:</strong> Read-only data collection from your Microsoft 365 tenant</li><li><strong>Azure CosmosDB:</strong> Encrypted database storage</li><li><strong>Azure Blob Storage:</strong> Encrypted report storage</li><li><strong>Microsoft Clarity:</strong> Website analytics</li><li><strong>Azure AD / Azure AD B2C:</strong> Authentication and identity management</li></ul>',
+      '</div>',
+
+      '<div class="card pad" style="margin-bottom:20px;">',
+      '<div style="font-weight:780; font-size:18px; margin-bottom:12px;">7. Data Sharing and Disclosure</div>',
+      '<p class="small" style="font-weight:700;">We do not sell your personal information or Client Data to third parties.</p>',
+      '<p class="small" style="margin-top:8px;">Your security assessment results constitute your confidential information. We share information only with: service providers (under confidentiality obligations), when required by law (with prompt notice to you), in connection with business transfers, or with your explicit consent.</p>',
+      '</div>',
+
+      '<div class="card pad" style="margin-bottom:20px;">',
+      '<div style="font-weight:780; font-size:18px; margin-bottom:12px;">8. Data Retention and Deletion</div>',
+      '<ul class="small" style="padding-left:20px;"><li style="margin-bottom:8px;"><strong>Client Data:</strong> Securely deleted within 90 days of service termination. Earlier deletion available on written request. We certify deletion upon request.</li><li style="margin-bottom:8px;"><strong>Contact form submissions:</strong> Retained for 12 months, then purged.</li><li style="margin-bottom:8px;"><strong>Account information:</strong> Retained for the duration of your active account.</li><li><strong>Analytics data:</strong> Microsoft Clarity retains session data per their policies (typically 30 days for recordings).</li></ul>',
+      '</div>',
+
+      '<div class="card pad" style="margin-bottom:20px;">',
+      '<div style="font-weight:780; font-size:18px; margin-bottom:12px;">9. Data Security</div>',
+      '<ul class="small" style="padding-left:20px;"><li><strong>Encryption in transit:</strong> TLS 1.2 or higher</li><li><strong>Encryption at rest:</strong> AES-256</li><li><strong>Web Application Firewall:</strong> Azure Front Door Premium with OWASP DRS 2.1</li><li><strong>Network isolation:</strong> Virtual network isolation and firewall rules</li><li><strong>Access controls:</strong> RBAC, MFA, and least privilege</li><li><strong>Credential protection:</strong> All tokens encrypted at rest and in transit</li></ul>',
+      '</div>',
+
+      '<div class="card pad" style="margin-bottom:20px;">',
+      '<div style="font-weight:780; font-size:18px; margin-bottom:12px;">10. Security Incident Notification</div>',
+      '<p class="small">In the event of a security incident involving your data, we shall notify you in writing within <strong>seventy-two (72) hours</strong> of discovery. The notification shall include the nature of the incident, data affected, corrective actions taken or planned, and a point of contact.</p>',
+      '</div>',
+
+      '<div class="card pad" style="margin-bottom:20px;">',
+      '<div style="font-weight:780; font-size:18px; margin-bottom:12px;">11. Your Rights (California Residents \u2014 CCPA)</div>',
+      '<p class="small">California residents have the right to: <strong>know</strong> what personal information we collect; <strong>request deletion</strong> of personal information; <strong>opt out</strong> of sales (we do not sell personal information); and receive <strong>non-discriminatory</strong> treatment for exercising CCPA rights.</p>',
+      '<p class="small" style="margin-top:8px;">Contact <a href="mailto:info@polarisconsulting.net" style="color: var(--accent-400);">info@polarisconsulting.net</a> to exercise your rights. We respond within 45 days.</p>',
+      '</div>',
+
+      '<div class="card pad" style="margin-bottom:20px;">',
+      '<div style="font-weight:780; font-size:18px; margin-bottom:12px;">12. Children\u2019s Privacy</div>',
+      '<p class="small">Our Services are not directed to individuals under 18. We do not knowingly collect personal information from children.</p>',
+      '</div>',
+
+      '<div class="card pad" style="margin-bottom:20px;">',
+      '<div style="font-weight:780; font-size:18px; margin-bottom:12px;">13. Changes to This Policy</div>',
+      '<p class="small">We may update this Privacy Policy from time to time. Material changes will be reflected in the \u201cLast updated\u201d date and communicated via email or prominent notice. Continued use constitutes acceptance.</p>',
+      '</div>',
+
+      '<div class="card pad">',
+      '<div style="font-weight:780; font-size:18px; margin-bottom:12px;">14. Contact Us</div>',
+      '<p class="small">If you have questions about this Privacy Policy or wish to exercise your data rights, please contact us:</p>',
+      '<div style="margin-top:12px; padding:16px; border:1px solid var(--border); border-radius:8px;">',
+      '<div style="font-weight:700;">Polaris Consulting, LLC</div>',
+      '<div class="small" style="margin-top:4px;">Los Angeles, California</div>',
+      '<div class="small" style="margin-top:4px;">Email: <a href="mailto:info@polarisconsulting.net" style="color: var(--accent-400);">info@polarisconsulting.net</a></div>',
+      '</div></div>',
+
+      '</div>',
+      '<div class="container footer"><div class="row" style="justify-content: space-between;"><div>Copyright ', String(new Date().getFullYear()), ' Polaris Consulting, LLC</div><div class="row"><a class="footer-link" href="#/terms">Terms</a><a class="footer-link" href="#/privacy">Privacy</a><button class="btn small" id="theme-toggle" title="Toggle theme">Theme</button></div></div></div>',
+    ].join("\n");
+    app.innerHTML = privacyHtml;
+    wireCommonHandlers();
   }
 
   function renderNotFound(app) {
